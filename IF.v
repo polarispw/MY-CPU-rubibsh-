@@ -5,7 +5,6 @@ module IF(
     input wire [`StallBus-1:0] stall,
 
     // input wire flush,
-    // input wire [31:0] new_pc,
 
     input wire [`BR_WD-1:0] br_bus,
 
@@ -53,7 +52,7 @@ module IF(
     
     assign inst_sram_en = ce_reg;
     assign inst_sram_wen = 4'b0;
-    assign inst_sram_addr = pc_reg;
+    assign inst_sram_addr = stall[0] == 1 ? pc_reg-32'h4 : pc_reg;
     assign inst_sram_wdata = 32'b0;
     assign if_to_id_bus = {
         ce_reg,
